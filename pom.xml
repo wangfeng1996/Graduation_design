@@ -112,7 +112,7 @@
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <!--guava是谷歌封装的一台工具框架  使编码更加轻松-->
             <artifactId>jackson-datatype-guava</artifactId>
-            <version>2.10.2</version>
+            <version>2.10.2 </version>
         </dependency>
 
         <!--logback-->
@@ -131,6 +131,16 @@
             <artifactId>slf4j-api</artifactId>
             <version>1.7.22</version>
         </dependency>
+
+        <!-- jsp api -->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jsp-api</artifactId>
+            <version>9.0.31</version>
+        </dependency>
+
+
+
 
     </dependencies>
 

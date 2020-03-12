@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.alibaba.com/schema/stat"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.alibaba.com/schema/stat http://www.alibaba.com/schema/stat.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <!--配置请求相关的驱动-->
     <!--这个标签可管理上下文的注解-->
@@ -10,36 +11,41 @@
 
     <!--    启动注解驱动spring mvc相关的功能-->
     <!--标签：-->
+
     <mvc:annotation-driven/>
 
-    <!--    启动包扫描功能    使用的mvc标签对那些位置是有效的-->
-    <!--扫描controller和service层的代码  dao是通过mybatis进行处理的-->
+    <!--
+    启动包扫描功能    使用的mvc标签对那些位置是有效的
+    扫描controller和service层的代码  dao是通过mybatis进行处理的
+    启动包时候要扫描的额位置
+    -->
 
-    <!--启动包时候要扫描的额位置-->
     <!--扫描controller-->
     <context:component-scan base-package="com.mmall.controller"/>
-
     <!--扫描service-->
     <context:component-scan base-package="com.mmall.service"/>
-<!--    定义两个核心的类-->
+    <!--    定义两个核心的类-->
 
-<!--    <bean class = "org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>-->
+    <!--    <bean class = "org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>-->
 
-    <bean class = "org.springframework.web.servlet.view.BeanNameViewResolver"/>
+    <!--处理全局的异常-->
+    <bean class="com.mmall.common.SpringExceptionResolver"/>
+
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
 
 
     <!--对viewResolver进行一些相关的配置-->
-<!--指定json，对json进行处理-->
-    <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+    <!--指定json，对json进行处理-->
+    <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
 
-<!-- jsp 页面进行处理-->
-<!--内部资源视图解析器-->
+    <!-- jsp 页面进行处理-->
+    <!--内部资源视图解析器-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-<!--参数-->
+        <!--参数-->
         <!--指定文件的-项目路径的前缀-->
-    <property name="prefix" value="/WEB-INF/views/" />
-<!--渲染的页面  文件的后缀-->
-    <property name="suffix" value=".jsp" />
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <!--渲染的页面  文件的后缀-->
+        <property name="suffix" value=".jsp"/>
 
     </bean>
 
