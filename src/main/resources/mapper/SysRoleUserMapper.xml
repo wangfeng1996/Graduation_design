@@ -6,11 +6,11 @@
     <result column="role_id" jdbcType="INTEGER" property="roleId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="operator" jdbcType="VARCHAR" property="operator" />
-    <result column="operator_time" jdbcType="TIMESTAMP" property="operatorTime" />
-    <result column="operator_ip" jdbcType="VARCHAR" property="operatorIp" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+    <result column="operate_ip" jdbcType="VARCHAR" property="operateIp" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, role_id, user_id, operator, operator_time, operator_ip
+    id, role_id, user_id, operator, operate_time, operate_ip
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -24,10 +24,10 @@
   </delete>
   <insert id="insert" parameterType="com.mmall.model.SysRoleUser">
     insert into sys_role_user (id, role_id, user_id, 
-      operator, operator_time, operator_ip
+      operator, operate_time, operate_ip
       )
     values (#{id,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
-      #{operator,jdbcType=VARCHAR}, #{operatorTime,jdbcType=TIMESTAMP}, #{operatorIp,jdbcType=VARCHAR}
+      #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, #{operateIp,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.mmall.model.SysRoleUser">
@@ -45,11 +45,11 @@
       <if test="operator != null">
         operator,
       </if>
-      <if test="operatorTime != null">
-        operator_time,
+      <if test="operateTime != null">
+        operate_time,
       </if>
-      <if test="operatorIp != null">
-        operator_ip,
+      <if test="operateIp != null">
+        operate_ip,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -65,11 +65,11 @@
       <if test="operator != null">
         #{operator,jdbcType=VARCHAR},
       </if>
-      <if test="operatorTime != null">
-        #{operatorTime,jdbcType=TIMESTAMP},
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="operatorIp != null">
-        #{operatorIp,jdbcType=VARCHAR},
+      <if test="operateIp != null">
+        #{operateIp,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -85,11 +85,11 @@
       <if test="operator != null">
         operator = #{operator,jdbcType=VARCHAR},
       </if>
-      <if test="operatorTime != null">
-        operator_time = #{operatorTime,jdbcType=TIMESTAMP},
+      <if test="operateTime != null">
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="operatorIp != null">
-        operator_ip = #{operatorIp,jdbcType=VARCHAR},
+      <if test="operateIp != null">
+        operate_ip = #{operateIp,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -99,8 +99,8 @@
     set role_id = #{roleId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
       operator = #{operator,jdbcType=VARCHAR},
-      operator_time = #{operatorTime,jdbcType=TIMESTAMP},
-      operator_ip = #{operatorIp,jdbcType=VARCHAR}
+      operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      operate_ip = #{operateIp,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

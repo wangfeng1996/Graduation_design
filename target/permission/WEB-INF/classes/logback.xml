@@ -1,43 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!--配置logback-->
-
-<!--在configuration下允许有多个appender、logger，但是只允许有一个root-->
-
 <configuration scan="true" scanPeriod="60 seconds">
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <!--pattern 就是日志的格式-->
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}[%thread]</pattern>
-
+<!--  格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度 %msg：日志消息，%n是换行符-->-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!--    </appender>-->
+    <!--<appender name="permission" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+    <!--<file>${catalina.home}/logs/permission.log</file>-->
+    <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+    <!--<FileNamePattern>${catalina.home}/logs/permission.%d{yyyy-MM-dd}.log.gz</FileNamePattern>-->
+    <!--</rollingPolicy>-->
+    <!--<layout class="ch.qos.logback.classic.PatternLayout">-->
+    <!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>-->
+    <!--</layout>-->
+    <!--</appender>-->
+    <!---->
+    <!--<logger name="xxx" level="INFO">-->
+    <!--<appender-ref ref="permission"/>-->
+    <!--</logger>-->
 
-    <!--    <appender name="permission" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
-    <!--        &lt;!&ndash;指定日志的名称&ndash;&gt;-->
-    <!--        <file>${catalina.home}/permission.log</file>-->
-
-    <!--        &lt;!&ndash;文件压缩的规则  根据时间来进行日志的压缩&ndash;&gt;-->
-    <!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
-    <!--            &lt;!&ndash;指定压缩之后的日志名称&ndash;&gt;-->
-    <!--            <FilerNamePatter>${catalina.home}/permission.%d{yyyy-MM-dd}.log.gz</FilerNamePatter>-->
-    <!--        </rollingPolicy>-->
-    <!--        &lt;!&ndash;展示每行的布局样式&ndash;&gt;-->
-    <!--        <layout class="ch.qos.logback.classic.PatternLayout">-->
-    <!--            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}[%thread]</pattern>-->
-    <!--        </layout>-->
-    <!--    </appender>-->
-
-    <!--    <logger></logger>-->
-
-
-    <!-- 以什么样的级别来输出日志  TRACE < DEBUG < INFO < WARN < ERROR -->
-    <!-- 当我的日志级别设置为INFO的时候，DEBUG和TRACE的日志就不会被输出-->
+    <!-- TRACE < DEBUG < INFO < WARN < ERROR -->
     <root level="INFO">
-        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="STDOUT" />
     </root>
 
 </configuration>

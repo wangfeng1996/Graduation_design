@@ -14,6 +14,10 @@
 
     <mvc:annotation-driven/>
 
+    <mvc:interceptors>
+        <bean class="com.mmall.common.HttpInterceptor" />
+    </mvc:interceptors>
+
     <!--
     启动包扫描功能    使用的mvc标签对那些位置是有效的
     扫描controller和service层的代码  dao是通过mybatis进行处理的
@@ -24,6 +28,20 @@
     <context:component-scan base-package="com.mmall.controller"/>
     <!--扫描service-->
     <context:component-scan base-package="com.mmall.service"/>
+
+
+    <mvc:resources location="/js/" mapping="/js/**"/>
+    <mvc:resources location="/css/" mapping="/css/**"/>
+    <mvc:resources location="/bootstrap3.3.5/" mapping="/bootstrap3.3.5/**"/>
+    <mvc:resources location="/assets/" mapping="/assets/**"/>
+<!--    <mvc:resources location="/ztree/" mapping="/ztree/**"/>-->
+
+
+
+    <bean class="com.mmall.common.ApplicationContextHelper" lazy-init="false"/>
+
+
+
     <!--    定义两个核心的类-->
 
     <!--    <bean class = "org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>-->
@@ -38,7 +56,7 @@
     <!--指定json，对json进行处理-->
     <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
 
-    <!-- jsp 页面进行处理-->
+    <!-- jsp 页面进行处理   页面的配置-->
     <!--内部资源视图解析器-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!--参数-->

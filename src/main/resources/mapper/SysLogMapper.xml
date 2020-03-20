@@ -6,19 +6,19 @@
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="target_id" jdbcType="INTEGER" property="targetId" />
     <result column="operator" jdbcType="VARCHAR" property="operator" />
-    <result column="operator_time" jdbcType="TIMESTAMP" property="operatorTime" />
-    <result column="operator_ip" jdbcType="VARCHAR" property="operatorIp" />
+    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
+    <result column="operate_ip" jdbcType="VARCHAR" property="operateIp" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.mmall.model.SysLogWithBLOBs">
     <result column="old_value" jdbcType="LONGVARCHAR" property="oldValue" />
-    <result column="new-value" jdbcType="LONGVARCHAR" property="newValue" />
+    <result column="new_value" jdbcType="LONGVARCHAR" property="newValue" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, type, target_id, operator, operator_time, operator_ip, status
+    id, type, target_id, operator, operate_time, operate_ip, status
   </sql>
   <sql id="Blob_Column_List">
-    old_value, new-value
+    old_value, new_value
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
@@ -34,11 +34,11 @@
   </delete>
   <insert id="insert" parameterType="com.mmall.model.SysLogWithBLOBs">
     insert into sys_log (id, type, target_id, 
-      operator, operator_time, operator_ip, 
-      status, old_value, new-value
+      operator, operate_time, operate_ip, 
+      status, old_value, new_value
       )
     values (#{id,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{targetId,jdbcType=INTEGER}, 
-      #{operator,jdbcType=VARCHAR}, #{operatorTime,jdbcType=TIMESTAMP}, #{operatorIp,jdbcType=VARCHAR}, 
+      #{operator,jdbcType=VARCHAR}, #{operateTime,jdbcType=TIMESTAMP}, #{operateIp,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{oldValue,jdbcType=LONGVARCHAR}, #{newValue,jdbcType=LONGVARCHAR}
       )
   </insert>
@@ -57,11 +57,11 @@
       <if test="operator != null">
         operator,
       </if>
-      <if test="operatorTime != null">
-        operator_time,
+      <if test="operateTime != null">
+        operate_time,
       </if>
-      <if test="operatorIp != null">
-        operator_ip,
+      <if test="operateIp != null">
+        operate_ip,
       </if>
       <if test="status != null">
         status,
@@ -70,7 +70,7 @@
         old_value,
       </if>
       <if test="newValue != null">
-        new-value,
+        new_value,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -86,11 +86,11 @@
       <if test="operator != null">
         #{operator,jdbcType=VARCHAR},
       </if>
-      <if test="operatorTime != null">
-        #{operatorTime,jdbcType=TIMESTAMP},
+      <if test="operateTime != null">
+        #{operateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="operatorIp != null">
-        #{operatorIp,jdbcType=VARCHAR},
+      <if test="operateIp != null">
+        #{operateIp,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -115,11 +115,11 @@
       <if test="operator != null">
         operator = #{operator,jdbcType=VARCHAR},
       </if>
-      <if test="operatorTime != null">
-        operator_time = #{operatorTime,jdbcType=TIMESTAMP},
+      <if test="operateTime != null">
+        operate_time = #{operateTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="operatorIp != null">
-        operator_ip = #{operatorIp,jdbcType=VARCHAR},
+      <if test="operateIp != null">
+        operate_ip = #{operateIp,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
@@ -128,7 +128,7 @@
         old_value = #{oldValue,jdbcType=LONGVARCHAR},
       </if>
       <if test="newValue != null">
-        new-value = #{newValue,jdbcType=LONGVARCHAR},
+        new_value = #{newValue,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -138,11 +138,11 @@
     set type = #{type,jdbcType=INTEGER},
       target_id = #{targetId,jdbcType=INTEGER},
       operator = #{operator,jdbcType=VARCHAR},
-      operator_time = #{operatorTime,jdbcType=TIMESTAMP},
-      operator_ip = #{operatorIp,jdbcType=VARCHAR},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      operate_ip = #{operateIp,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       old_value = #{oldValue,jdbcType=LONGVARCHAR},
-      new-value = #{newValue,jdbcType=LONGVARCHAR}
+      new_value = #{newValue,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.mmall.model.SysLog">
@@ -150,8 +150,8 @@
     set type = #{type,jdbcType=INTEGER},
       target_id = #{targetId,jdbcType=INTEGER},
       operator = #{operator,jdbcType=VARCHAR},
-      operator_time = #{operatorTime,jdbcType=TIMESTAMP},
-      operator_ip = #{operatorIp,jdbcType=VARCHAR},
+      operate_time = #{operateTime,jdbcType=TIMESTAMP},
+      operate_ip = #{operateIp,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
