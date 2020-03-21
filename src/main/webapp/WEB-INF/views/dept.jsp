@@ -185,44 +185,49 @@
 </ol>
 
 
+
+
+
 </script>
 
-<%--<script id="userListTemplate" type="x-tmpl-mustache">--%>
-<%--{{#userList}}--%>
-<%--<tr role="row" class="user-name odd" data-id="{{id}}"><!--even -->--%>
-<%--    <td><a href="#" class="user-edit" data-id="{{id}}">{{username}}</a></td>--%>
-<%--    <td>{{showDeptName}}</td>--%>
-<%--    <td>{{mail}}</td>--%>
-<%--    <td>{{telephone}}</td>--%>
-<%--    <td>{{#bold}}{{showStatus}}{{/bold}}</td> <!-- 此处套用函数对status做特殊处理 -->--%>
-<%--    <td>--%>
-<%--        <div class="hidden-sm hidden-xs action-buttons">--%>
-<%--            <a class="green user-edit" href="#" data-id="{{id}}">--%>
-<%--                <i class="ace-icon fa fa-pencil bigger-100"></i>--%>
-<%--            </a>--%>
-<%--            <a class="red user-acl" href="#" data-id="{{id}}">--%>
-<%--                <i class="ace-icon fa fa-flag bigger-100"></i>--%>
-<%--            </a>--%>
-<%--        </div>--%>
-<%--    </td>--%>
-<%--</tr>--%>
-<%--{{/userList}}--%>
+<script id="userListTemplate" type="x-tmpl-mustache">
+{{#userList}}
+<tr role="row" class="user-name odd" data-id="{{id}}"><!--even -->
+    <td><a href="#" class="user-edit" data-id="{{id}}">{{username}}</a></td>
+    <td>{{showDeptName}}</td>
+    <td>{{mail}}</td>
+    <td>{{telephone}}</td>
+    <td>{{#bold}}{{showStatus}}{{/bold}}</td> <!-- 此处套用函数对status做特殊处理 -->
+    <td>
+        <div class="hidden-sm hidden-xs action-buttons">
+            <a class="green user-edit" href="#" data-id="{{id}}">
+                <i class="ace-icon fa fa-pencil bigger-100"></i>
+            </a>
+            <a class="red user-acl" href="#" data-id="{{id}}">
+                <i class="ace-icon fa fa-flag bigger-100"></i>
+            </a>
+        </div>
+    </td>
+</tr>
+{{/userList}}
 
-<%--</script>--%>
+
+
+</script>
 
 <script type="application/javascript">
     $(function () {
 
         var deptList; // 存储树形部门列表
         var deptMap = {}; // 存储map格式的部门信息
-        // var userMap = {}; // 存储map格式的用户信息
+        var userMap = {}; // 存储map格式的用户信息
         var optionStr = "";
         var lastClickDeptId = -1;
         var deptListTemplate = $('#deptListTemplate').html();
 
         Mustache.parse(deptListTemplate);
-        <%--        var userListTemplate = $('#userListTemplate').html();--%>
-        <%--        Mustache.parse(userListTemplate);--%>
+        var userListTemplate = $('#userListTemplate').html();
+        Mustache.parse(userListTemplate);
 
         loadDeptTree();
 
@@ -352,62 +357,65 @@
 
         //加载用户列表
         function loadUserList(deptId) {
-            // var pageSize = $("#pageSize").val();
-            // var url = "/sys/user/page.json?deptId=" + deptId;
-            // var pageNo = $("#userPage .pageNo").val() || 1;
-            // $.ajax({
-            //     url: url,
-            //     data: {
-            //         pageSize: pageSize,
-            //         pageNo: pageNo
-            //     },
-            //     success: function (result) {
-            //         renderUserListAndPage(result, url);
-            //     }
-            // })
-            //TODO;
-            console.log("load user,deptId:" + deptId);
+            //取出当前页面要展示的行数
+            var pageSize = $("#pageSize").val();
+            //定义后端去前端的url
+            var url = "/sys/user/page.json?deptId=" + deptId;
+            var pageNo = $("#userPage .pageNo").val() || 1;
+            $.ajax({
+                url: url,
+                data: {
+                    pageSize: pageSize,
+                    pageNo: pageNo
+                },
+                success: function (result) {
+                    renderUserListAndPage(result, url);
+                }
+            })
+
         }
 
-        <%--        function renderUserListAndPage(result, url) {--%>
-        <%--            if (result.ret) {--%>
-        <%--                if (result.data.total > 0) {--%>
-        <%--                    var rendered = Mustache.render(userListTemplate, {--%>
-        <%--                        userList: result.data.data,--%>
-        <%--                        "showDeptName": function () {--%>
-        <%--                            return deptMap[this.deptId].name;--%>
-        <%--                        },--%>
-        <%--                        "showStatus": function () {--%>
-        <%--                            return this.status == 1 ? '有效' : (this.status == 0 ? '无效' : '删除');--%>
-        <%--                        },--%>
-        <%--                        "bold": function () {--%>
-        <%--                            return function (text, render) {--%>
-        <%--                                var status = render(text);--%>
-        <%--                                if (status == '有效') {--%>
-        <%--                                    return "<span class='label label-sm label-success'>有效</span>";--%>
-        <%--                                } else if (status == '无效') {--%>
-        <%--                                    return "<span class='label label-sm label-warning'>无效</span>";--%>
-        <%--                                } else {--%>
-        <%--                                    return "<span class='label'>删除</span>";--%>
-        <%--                                }--%>
-        <%--                            }--%>
-        <%--                        }--%>
-        <%--                    });--%>
-        <%--                    $("#userList").html(rendered);--%>
-        <%--                    bindUserClick();--%>
-        <%--                    $.each(result.data.data, function (i, user) {--%>
-        <%--                        userMap[user.id] = user;--%>
-        <%--                    })--%>
-        <%--                } else {--%>
-        <%--                    $("#userList").html('');--%>
-        <%--                }--%>
-        <%--                var pageSize = $("#pageSize").val();--%>
-        <%--                var pageNo = $("#userPage .pageNo").val() || 1;--%>
-        <%--                renderPage(url, result.data.total, pageNo, pageSize, result.data.total > 0 ? result.data.data.length : 0, "userPage", renderUserListAndPage);--%>
-        <%--            } else {--%>
-        <%--                showMessage("获取部门下用户列表", result.msg, false);--%>
-        <%--            }--%>
-        <%--        }--%>
+        //渲染分页列表
+        function renderUserListAndPage(result, url) {
+            if (result.ret) {
+                if (result.data.total > 0) {
+                    var rendered = Mustache.render(userListTemplate, {
+                        userList: result.data.data,
+                        "showDeptName": function () {
+                            return deptMap[this.deptId].name;
+                        },
+                        "showStatus": function () {
+                            return this.status == 1 ? '有效' : (this.status == 0 ? '无效' : '删除');
+                        },
+                        "bold": function () {
+                            return function (text, render) {
+                                var status = render(text);
+                                if (status == '有效') {
+                                    return "<span class='label label-sm label-success'>有效</span>";
+                                } else if (status == '无效') {
+                                    return "<span class='label label-sm label-warning'>无效</span>";
+                                } else {
+                                    return "<span class='label'>删除</span>";
+                                }
+                            }
+                        }
+                    });
+                    $("#userList").html(rendered);
+                    bindUserClick();
+                    $.each(result.data.data, function (i, user) {
+                        userMap[user.id] = user;
+                    })
+                } else {
+                    $("#userList").html('');
+                }
+                var pageSize = $("#pageSize").val();
+                var pageNo = $("#userPage .pageNo").val() || 1;
+                renderPage(url, result.data.total, pageNo, pageSize, result.data.total > 0 ? result.data.data.length : 0, "userPage", renderUserListAndPage);
+            } else {
+                //处理异常返回
+                showMessage("获取部门下用户列表", result.msg, false);
+            }
+        }
 
         <%--        $(".user-add").click(function () {--%>
         <%--            $("#dialog-user-form").dialog({--%>
@@ -437,6 +445,10 @@
         <%--            });--%>
         <%--        });--%>
 
+        function bindUserClick() {
+            //todo;
+        }
+
         <%--        function bindUserClick() {--%>
         <%--            $(".user-acl").click(function (e) {--%>
         <%--                e.preventDefault();--%>
@@ -456,6 +468,7 @@
         <%--                    }--%>
         <%--                })--%>
         <%--            });--%>
+
         <%--            $(".user-edit").click(function (e) {--%>
         <%--                e.preventDefault();--%>
         <%--                e.stopPropagation();--%>
