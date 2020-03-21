@@ -187,19 +187,19 @@
     </if>
   </select>
 
-<!--  <select id="countByDeptId" parameterType="int" resultType="int">-->
-<!--    SELECT count(1)-->
-<!--    FROM sys_user-->
-<!--    WHERE dept_id = #{deptId}-->
-<!--  </select>-->
+  <select id="countByDeptId" parameterType="int" resultType="int">
+    SELECT count(1)
+    FROM sys_user
+    WHERE dept_id = #{deptId}
+  </select>
 
-<!--  <select id="getPageByDeptId" parameterType="map" resultMap="BaseResultMap">-->
-<!--    SELECT <include refid="Base_Column_List" />-->
-<!--    FROM sys_user-->
-<!--    WHERE dept_id = #{deptId}-->
-<!--    ORDER BY username ASC-->
-<!--    LIMIT #{page.offset}, #{page.pageSize}-->
-<!--  </select>-->
+  <select id="getPageByDeptId" parameterType="map" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM sys_user
+    WHERE dept_id = #{deptId}
+    ORDER BY username ASC
+    LIMIT #{page.offset}, #{page.pageSize}
+  </select>
 
 <!--  <select id="getByIdList" parameterType="map" resultMap="BaseResultMap">-->
 <!--    SELECT <include refid="Base_Column_List" />-->
