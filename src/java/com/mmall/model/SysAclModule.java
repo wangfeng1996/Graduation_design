@@ -1,7 +1,14 @@
 package com.mmall.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
+@Builder
+@NoArgsConstructor //无参的构造函数
+@AllArgsConstructor  //全参的构造函数
 public class SysAclModule {
     private Integer id;
 
