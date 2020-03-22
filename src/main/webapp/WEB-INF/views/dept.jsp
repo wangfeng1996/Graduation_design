@@ -171,18 +171,19 @@
             <span style="float:right;">
                 <%--编辑按钮--%>
                 <a class="green dept-edit" href="#" data-id="{{id}}" >
-                    <i class="ace-icon fa fa-pencil bigger-100"></i>
+                    <i class="ace-icon fa fa-pencil-square-o bigger-130"></i>
                 </a>
                 &nbsp;
                 <%-- 删除按钮--%>
                 <a class="red dept-delete" href="#" data-id="{{id}}" data-name="{{name}}">
-                    <i class="ace-icon fa fa-trash-o bigger-100"></i>
+                    <i class="ace-icon fa fa-trash-o bigger-130"></i>
                 </a>
             </span>
             </div>
         </li>
     {{/deptList}}
 </ol>
+
 
 
 
@@ -201,8 +202,9 @@
     <td>
         <div class="hidden-sm hidden-xs action-buttons">
             <a class="green user-edit" href="#" data-id="{{id}}">
-                <i class="ace-icon fa fa-pencil bigger-100"></i>
+                <i class="ace-icon fa fa-pencil-square-o bigger-100"></i>
             </a>
+
             <a class="red user-acl" href="#" data-id="{{id}}">
                 <i class="ace-icon fa fa-flag bigger-100"></i>
             </a>
@@ -210,6 +212,7 @@
     </td>
 </tr>
 {{/userList}}
+
 
 
 
@@ -417,96 +420,97 @@
             }
         }
 
-                $(".user-add").click(function () {
-                    $("#dialog-user-form").dialog({
-                        modal: true,
-                        title: "新增用户",
-                        open: function (event, ui) {
-                            $(".ui-dialog-titlebar-close", $(this).parent()).hide();
-                            optionStr = "";
-                            recursiveRenderDeptSelect(deptList, 1);
-                            $("#userForm")[0].reset();
-                            $("#deptSelectId").html(optionStr);
-                        },
-                        buttons: {
-                            "添加": function (e) {
-                                e.preventDefault();
-                                updateUser(true, function (data) {
-                                    $("#dialog-user-form").dialog("close");
-                                    loadUserList(lastClickDeptId);
-                                }, function (data) {
-                                    showMessage("新增用户", data.msg, false);
-                                })
-                            },
-                            "取消": function () {
-                                $("#dialog-user-form").dialog("close");
-                            }
-                        }
-                    });
-                });
-                //绑定用户点击事件
-                function bindUserClick() {
-                    $(".user-acl").click(function (e) {
+        $(".user-add").click(function () {
+            $("#dialog-user-form").dialog({
+                modal: true,
+                title: "新增用户",
+                open: function (event, ui) {
+                    $(".ui-dialog-titlebar-close", $(this).parent()).hide();
+                    optionStr = "";
+                    recursiveRenderDeptSelect(deptList, 1);
+                    $("#userForm")[0].reset();
+                    $("#deptSelectId").html(optionStr);
+                },
+                buttons: {
+                    "添加": function (e) {
                         e.preventDefault();
-                        e.stopPropagation();
-                        var userId = $(this).attr("data-id");
-                        $.ajax({
-                            url: "/sys/user/acls.json",
-                            data: {
-                                userId: userId
-                            },
-                            success: function (result) {
-                                if (result.ret) {
-                                    console.log(result)
-                                } else {
-                                    showMessage("获取用户权限数据", result.msg, false);
-                                }
-                            }
+                        updateUser(true, function (data) {
+                            $("#dialog-user-form").dialog("close");
+                            loadUserList(lastClickDeptId);
+                        }, function (data) {
+                            showMessage("新增用户", data.msg, false);
                         })
-                    });
-        //编辑用户的点击事件
-                    $(".user-edit").click(function (e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        var userId = $(this).attr("data-id");
-                        $("#dialog-user-form").dialog({
-                            modal: true,
-                            title: "编辑用户",
-                            open: function (event, ui) {
-                                $(".ui-dialog-titlebar-close", $(this).parent()).hide();
-                                optionStr = "";
-                                recursiveRenderDeptSelect(deptList, 1);
-                                $("#userForm")[0].reset();
-                                $("#deptSelectId").html(optionStr);
-
-                                var targetUser = userMap[userId];
-                                if (targetUser) {
-                                    $("#deptSelectId").val(targetUser.deptId);
-                                    $("#userName").val(targetUser.username);
-                                    $("#userMail").val(targetUser.mail);
-                                    $("#userTelephone").val(targetUser.telephone);
-                                    $("#userStatus").val(targetUser.status);
-                                    $("#userRemark").val(targetUser.remark);
-                                    $("#userId").val(targetUser.id);
-                                }
-                            },
-                            buttons: {
-                                "更新": function (e) {
-                                    e.preventDefault();
-                                    updateUser(false, function (data) {
-                                        $("#dialog-user-form").dialog("close");
-                                        loadUserList(lastClickDeptId);
-                                    }, function (data) {
-                                        showMessage("更新用户", data.msg, false);
-                                    })
-                                },
-                                "取消": function () {
-                                    $("#dialog-user-form").dialog("close");
-                                }
-                            }
-                        });
-                    });
+                    },
+                    "取消": function () {
+                        $("#dialog-user-form").dialog("close");
+                    }
                 }
+            });
+        });
+
+        //绑定用户点击事件
+        function bindUserClick() {
+            $(".user-acl").click(function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var userId = $(this).attr("data-id");
+                $.ajax({
+                    url: "/sys/user/acls.json",
+                    data: {
+                        userId: userId
+                    },
+                    success: function (result) {
+                        if (result.ret) {
+                            console.log(result)
+                        } else {
+                            showMessage("获取用户权限数据", result.msg, false);
+                        }
+                    }
+                })
+            });
+            //编辑用户的点击事件
+            $(".user-edit").click(function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var userId = $(this).attr("data-id");
+                $("#dialog-user-form").dialog({
+                    modal: true,
+                    title: "编辑用户",
+                    open: function (event, ui) {
+                        $(".ui-dialog-titlebar-close", $(this).parent()).hide();
+                        optionStr = "";
+                        recursiveRenderDeptSelect(deptList, 1);
+                        $("#userForm")[0].reset();
+                        $("#deptSelectId").html(optionStr);
+
+                        var targetUser = userMap[userId];
+                        if (targetUser) {
+                            $("#deptSelectId").val(targetUser.deptId);
+                            $("#userName").val(targetUser.username);
+                            $("#userMail").val(targetUser.mail);
+                            $("#userTelephone").val(targetUser.telephone);
+                            $("#userStatus").val(targetUser.status);
+                            $("#userRemark").val(targetUser.remark);
+                            $("#userId").val(targetUser.id);
+                        }
+                    },
+                    buttons: {
+                        "更新": function (e) {
+                            e.preventDefault();
+                            updateUser(false, function (data) {
+                                $("#dialog-user-form").dialog("close");
+                                loadUserList(lastClickDeptId);
+                            }, function (data) {
+                                showMessage("更新用户", data.msg, false);
+                            })
+                        },
+                        "取消": function () {
+                            $("#dialog-user-form").dialog("close");
+                        }
+                    }
+                });
+            });
+        }
 
         $(".dept-add").click(function () {
             $("#dialog-dept-form").dialog({
@@ -558,25 +562,25 @@
             }
         }
 
-                function updateUser(isCreate, successCallback, failCallback) {
-                    $.ajax({
-                        url: isCreate ? "/sys/user/save.json" : "/sys/user/update.json",
-                        data: $("#userForm").serializeArray(),
-                        type: 'POST',
-                        success: function (result) {
-                            if (result.ret) {
-                                loadDeptTree();
-                                if (successCallback) {
-                                    successCallback(result);
-                                }
-                            } else {
-                                if (failCallback) {
-                                    failCallback(result);
-                                }
-                            }
+        function updateUser(isCreate, successCallback, failCallback) {
+            $.ajax({
+                url: isCreate ? "/sys/user/save.json" : "/sys/user/update.json",
+                data: $("#userForm").serializeArray(),
+                type: 'POST',
+                success: function (result) {
+                    if (result.ret) {
+                        loadDeptTree();
+                        if (successCallback) {
+                            successCallback(result);
                         }
-                    })
+                    } else {
+                        if (failCallback) {
+                            failCallback(result);
+                        }
+                    }
                 }
+            })
+        }
 
         //添加更新的功能---参数列表（是否是新增部门、成功之后执行的功能、失败之后执行的功能）
         function updateDept(isCreate, successCallback, failCallback) {
