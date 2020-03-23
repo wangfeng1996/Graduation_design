@@ -25,9 +25,11 @@ public class SysAclService {
 
 //    @Resource
 //    private SysLogService sysLogService;
-
+//权限点的新增方法
     public void save(AclParam param) {
+//        参数校验的方法进行参数的校验
         BeanValidator.check(param);
+
         if (checkExist(param.getAclModuleId(), param.getName(), param.getId())) {
             throw new ParamException("当前权限模块下面存在相同名称的权限点");
         }
@@ -40,7 +42,7 @@ public class SysAclService {
         sysAclMapper.insertSelective(acl);
 //        sysLogService.saveAclLog(null, acl);
     }
-
+//权限点的新增的方法
     public void update(AclParam param) {
         BeanValidator.check(param);
         if (checkExist(param.getAclModuleId(), param.getName(), param.getId())) {
@@ -58,11 +60,11 @@ public class SysAclService {
         sysAclMapper.updateByPrimaryKeySelective(after);
 //        sysLogService.saveAclLog(before, after);
     }
-
+//校验相同名称
     public boolean checkExist(int aclModuleId, String name, Integer id) {
         return sysAclMapper.countByNameAndAclModuleId(aclModuleId, name, id) > 0;
     }
-
+//校验相同
     public String generateCode() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         return dateFormat.format(new Date()) + "_" + (int)(Math.random() * 100);
