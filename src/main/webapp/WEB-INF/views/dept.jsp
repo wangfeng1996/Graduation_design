@@ -286,22 +286,21 @@
                 var deptId = $(this).attr("data-id");
                 var deptName = $(this).attr("data-name");
                 if (confirm("确定要删除部门【" + deptName + "】吗?")) {
-                    // $.ajax({
-                    //     url: "/sys/dept/delete.json",
-                    //     data: {
-                    //         id: deptId
-                    //     },
-                    //     success: function (result) {
-                    //         if (result.ret) {
-                    //             showMessage("删除部门[" + deptName + "]", "操作成功", true);
-                    //             loadDeptTree();
-                    //         } else {
-                    //             showMessage("删除部门[" + deptName + "]", result.msg, false);
-                    //         }
-                    //     }
-                    // });
-                    //TODO;
-                    console.log("delete dept :" + deptName);
+                    $.ajax({
+                        url: "/sys/dept/delete.json",
+                        data: {
+                            id: deptId
+                        },
+                        success: function (result) {
+                            if (result.ret) {
+                                showMessage("删除部门【" + deptName + "】", "操作成功", true);
+                                loadDeptTree();
+                            } else {
+                                showMessage("删除部门【" + deptName + "】", result.msg, false);
+                            }
+                        }
+                    });
+
                 }
             });
 

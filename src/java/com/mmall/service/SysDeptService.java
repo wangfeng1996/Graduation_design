@@ -112,5 +112,17 @@ public class SysDeptService {
         //返回上一级部门的level
         return dept.getLevel();
     }
+//    删除部门用户
+    public void delete(int deptId) {
+        SysDept dept = sysDeptMapper.selectByPrimaryKey(deptId);
+        Preconditions.checkNotNull(dept, "待删除的部门不存在，无法删除");
+        if (sysDeptMapper.countByParentId(dept.getId()) > 0) {
+            throw new ParamException("当前部门下面有子部门，无法删除");
+        }
+//        if(sysUserMapper.countByDeptId(dept.getId()) > 0) {
+//            throw new ParamException("当前部门下面有用户，无法删除");
+//        }
+        sysDeptMapper.deleteByPrimaryKey(deptId);
+    }
 
 }

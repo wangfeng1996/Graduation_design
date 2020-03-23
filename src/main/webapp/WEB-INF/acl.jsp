@@ -230,7 +230,6 @@
         var aclListTemplate = $('#aclListTemplate').html();
         Mustache.parse(aclListTemplate);
 
-        //加载权限模块树
         loadAclModuleTree();
 
         function loadAclModuleTree() {
@@ -450,7 +449,7 @@
                 });
             });
         }
-        //高亮显示
+
         function handleAclModuleSelected(aclModuleId) {
             if (lastClickAclModuleId != -1) {
                 var lastAclModule = $("#aclModule_" + lastClickAclModuleId + " .dd2-content:first");
@@ -542,7 +541,6 @@
                     }
                 })
             });
-            //编辑按钮
             $(".acl-edit").click(function(e) {
                 e.preventDefault();
                 e.stopPropagation();
