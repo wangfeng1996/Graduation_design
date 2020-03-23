@@ -479,7 +479,7 @@
                 }
             })
         }
-
+        //分页展示
         function renderAclListAndPage(result, url) {
             if(result.ret) {
                 if (result.data.total > 0){
@@ -584,7 +584,7 @@
                 });
             })
         }
-
+        //新增
         $(".acl-add").click(function() {
             $("#dialog-acl-form").dialog({
                 modal: true,
@@ -597,6 +597,7 @@
                     $("#aclModuleSelectId").html(optionStr);
                 },
                 buttons : {
+
                     "添加": function(e) {
                         e.preventDefault();
                         updateAcl(true, function (data) {
