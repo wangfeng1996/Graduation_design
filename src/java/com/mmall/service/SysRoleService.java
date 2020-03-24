@@ -1,38 +1,30 @@
 package com.mmall.service;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
+
 import com.mmall.common.RequestHolder;
-<<<<<<< HEAD
 
 import com.mmall.dao.SysRoleMapper;
 
-=======
-import com.mmall.dao.SysRoleAclMapper;
-import com.mmall.dao.SysRoleMapper;
-import com.mmall.dao.SysRoleUserMapper;
-import com.mmall.dao.SysUserMapper;
->>>>>>> origin/master
 import com.mmall.exception.ParamException;
 import com.mmall.model.SysRole;
-import com.mmall.model.SysUser;
+
 import com.mmall.param.RoleParam;
 import com.mmall.util.BeanValidator;
 import com.mmall.util.IpUtil;
-import org.apache.commons.collections.CollectionUtils;
+
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Service
 public class SysRoleService {
 
     @Resource
     private SysRoleMapper sysRoleMapper;
-<<<<<<< HEAD
 //    @Resource
 //    private SysRoleUserMapper sysRoleUserMapper;
 //    @Resource
@@ -40,17 +32,10 @@ public class SysRoleService {
 //    @Resource
 //    private SysUserMapper sysUserMapper;
 //    @Resource
-=======
-    @Resource
-    private SysRoleUserMapper sysRoleUserMapper;
-    @Resource
-    private SysRoleAclMapper sysRoleAclMapper;
-    @Resource
-    private SysUserMapper sysUserMapper;
-    @Resource
->>>>>>> origin/master
 //    private SysLogService sysLogService;
 
+
+    //    修改操作
     public void save(RoleParam param) {
         BeanValidator.check(param);
         if (checkExist(param.getName(), param.getId())) {
@@ -65,6 +50,7 @@ public class SysRoleService {
 //        sysLogService.saveRoleLog(null, role);
     }
 
+    //更新操作
     public void update(RoleParam param) {
         BeanValidator.check(param);
         if (checkExist(param.getName(), param.getId())) {
@@ -81,11 +67,8 @@ public class SysRoleService {
         sysRoleMapper.updateByPrimaryKeySelective(after);
 //        sysLogService.saveRoleLog(before, after);
     }
-<<<<<<< HEAD
-//获取所有的角色
-=======
 
->>>>>>> origin/master
+    //获取所有的角色
     public List<SysRole> getAll() {
         return sysRoleMapper.getAll();
     }
@@ -93,11 +76,7 @@ public class SysRoleService {
     private boolean checkExist(String name, Integer id) {
         return sysRoleMapper.countByName(name, id) > 0;
     }
-<<<<<<< HEAD
 //
-=======
-
->>>>>>> origin/master
 //    public List<SysRole> getRoleListByUserId(int userId) {
 //        List<Integer> roleIdList = sysRoleUserMapper.getRoleIdListByUserId(userId);
 //        if (CollectionUtils.isEmpty(roleIdList)) {
