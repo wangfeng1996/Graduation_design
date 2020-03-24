@@ -3,9 +3,16 @@ package com.mmall.service;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.mmall.common.RequestHolder;
+<<<<<<< HEAD
 
 import com.mmall.dao.SysRoleMapper;
 
+=======
+import com.mmall.dao.SysRoleAclMapper;
+import com.mmall.dao.SysRoleMapper;
+import com.mmall.dao.SysRoleUserMapper;
+import com.mmall.dao.SysUserMapper;
+>>>>>>> origin/master
 import com.mmall.exception.ParamException;
 import com.mmall.model.SysRole;
 import com.mmall.model.SysUser;
@@ -25,6 +32,7 @@ public class SysRoleService {
 
     @Resource
     private SysRoleMapper sysRoleMapper;
+<<<<<<< HEAD
 //    @Resource
 //    private SysRoleUserMapper sysRoleUserMapper;
 //    @Resource
@@ -32,6 +40,15 @@ public class SysRoleService {
 //    @Resource
 //    private SysUserMapper sysUserMapper;
 //    @Resource
+=======
+    @Resource
+    private SysRoleUserMapper sysRoleUserMapper;
+    @Resource
+    private SysRoleAclMapper sysRoleAclMapper;
+    @Resource
+    private SysUserMapper sysUserMapper;
+    @Resource
+>>>>>>> origin/master
 //    private SysLogService sysLogService;
 
     public void save(RoleParam param) {
@@ -64,7 +81,11 @@ public class SysRoleService {
         sysRoleMapper.updateByPrimaryKeySelective(after);
 //        sysLogService.saveRoleLog(before, after);
     }
+<<<<<<< HEAD
 //获取所有的角色
+=======
+
+>>>>>>> origin/master
     public List<SysRole> getAll() {
         return sysRoleMapper.getAll();
     }
@@ -72,7 +93,11 @@ public class SysRoleService {
     private boolean checkExist(String name, Integer id) {
         return sysRoleMapper.countByName(name, id) > 0;
     }
+<<<<<<< HEAD
 //
+=======
+
+>>>>>>> origin/master
 //    public List<SysRole> getRoleListByUserId(int userId) {
 //        List<Integer> roleIdList = sysRoleUserMapper.getRoleIdListByUserId(userId);
 //        if (CollectionUtils.isEmpty(roleIdList)) {
