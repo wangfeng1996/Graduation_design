@@ -47,11 +47,11 @@ public class SysAclModuleController {
     public JsonData tree() {
         return JsonData.success(sysTreeService.aclModuleTree());
     }
-//
-//    @RequestMapping("/delete.json")
-//    @ResponseBody
-//    public JsonData delete(@RequestParam("id") int id) {
-//        sysAclModuleService.delete(id);
-//        return JsonData.success();
-//    }
+//删除
+    @RequestMapping("/delete.json")
+    @ResponseBody
+    public JsonData delete(@RequestParam("id") int id) {
+        sysAclModuleService.delete(id);
+        return JsonData.success();
+    }
 }

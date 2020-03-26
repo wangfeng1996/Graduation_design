@@ -4,6 +4,7 @@ package com.mmall.service;
 import com.google.common.base.Preconditions;
 import com.mmall.common.RequestHolder;
 import com.mmall.dao.SysDeptMapper;
+import com.mmall.dao.SysUserMapper;
 import com.mmall.exception.ParamException;
 import com.mmall.model.SysDept;
 import com.mmall.param.DeptParam;
@@ -22,6 +23,11 @@ import java.util.List;
 public class SysDeptService {
     @Resource
     private SysDeptMapper sysDeptMapper;
+    @Resource
+    private SysUserMapper sysUserMapper;
+    @Resource
+    private SysLogService sysLogService;
+
 
 
     public void save(DeptParam param) {
@@ -41,7 +47,7 @@ public class SysDeptService {
         dept.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         dept.setOperateTime(new Date());
         sysDeptMapper.insertSelective(dept);//判断没有值的情况下是不进行处理的,只插入你有值得值
-//        sysLogService.saveDeptLog(null, dept);
+        sysLogService.saveDeptLog(null, dept);
 
 
     }
@@ -68,7 +74,7 @@ public class SysDeptService {
 
 
         updateWithChild(before, after);
-//        sysLogService.saveDeptLog(before, after);
+        sysLogService.saveDeptLog(before, after);
     }
 
     @Transactional // 如果要保证事务生效，需要调整这个方法，一个可行的方法是重新创建一个service类，然后把这个方法转移过去
@@ -119,9 +125,9 @@ public class SysDeptService {
         if (sysDeptMapper.countByParentId(dept.getId()) > 0) {
             throw new ParamException("当前部门下面有子部门，无法删除");
         }
-//        if(sysUserMapper.countByDeptId(dept.getId()) > 0) {
-//            throw new ParamException("当前部门下面有用户，无法删除");
-//        }
+        if(sysUserMapper.countByDeptId(dept.getId()) > 0) {
+            throw new ParamException("当前部门下面有用户，无法删除");
+        }
         sysDeptMapper.deleteByPrimaryKey(deptId);
     }
 

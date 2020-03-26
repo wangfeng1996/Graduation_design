@@ -9,6 +9,7 @@ import com.mmall.common.JsonData;
 import com.mmall.model.SysUser;
 import com.mmall.param.UserParam;
 //import com.mmall.service.SysRoleService;
+import com.mmall.service.SysRoleService;
 import com.mmall.service.SysTreeService;
 import com.mmall.service.SysUserService;
 import org.springframework.stereotype.Controller;
@@ -26,15 +27,15 @@ public class SysUserController {
 
     @Resource
     private SysUserService sysUserService;
-//    @Resource
-//    private SysTreeService sysTreeService;
-//    @Resource
-//    private SysRoleService sysRoleService;
+    @Resource
+    private SysTreeService sysTreeService;
+    @Resource
+    private SysRoleService sysRoleService;
 
-//    @RequestMapping("/noAuth.page")
-//    public ModelAndView noAuth() {
-//        return new ModelAndView("noAuth");
-//    }
+    @RequestMapping("/noAuth.page")
+    public ModelAndView noAuth() {
+        return new ModelAndView("noAuth");
+    }
 
     @RequestMapping("/save.json")
     @ResponseBody
@@ -58,12 +59,12 @@ public class SysUserController {
     }
 
 
-//    @RequestMapping("/acls.json")
-//    @ResponseBody
-//    public JsonData acls(@RequestParam("userId") int userId) {
-//        Map<String, Object> map = Maps.newHashMap();
-//        map.put("acls", sysTreeService.userAclTree(userId));
-//        map.put("roles", sysRoleService.getRoleListByUserId(userId));
-//        return JsonData.success(map);
-//    }
+    @RequestMapping("/acls.json")
+    @ResponseBody
+    public JsonData acls(@RequestParam("userId") int userId) {
+        Map<String, Object> map = Maps.newHashMap();
+        map.put("acls", sysTreeService.userAclTree(userId));
+        map.put("roles", sysRoleService.getRoleListByUserId(userId));
+        return JsonData.success(map);
+    }
 }

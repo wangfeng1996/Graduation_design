@@ -23,9 +23,10 @@ public class SysAclService {
     @Resource
     private SysAclMapper sysAclMapper;
 
-    //    @Resource
-//    private SysLogService sysLogService;
-//权限点的新增方法
+    @Resource
+    private SysLogService sysLogService;
+
+    //权限点的新增方法
     public void save(AclParam param) {
 //        参数校验的方法进行参数的校验
         BeanValidator.check(param);
@@ -40,7 +41,7 @@ public class SysAclService {
         acl.setOperateTime(new Date());
         acl.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
         sysAclMapper.insertSelective(acl);
-//        sysLogService.saveAclLog(null, acl);
+        sysLogService.saveAclLog(null, acl);
     }
 
     //权限点的新增的方法
@@ -60,7 +61,7 @@ public class SysAclService {
         after.setOperateIp(IpUtil.getRemoteIp(RequestHolder.getCurrentRequest()));
 
         sysAclMapper.updateByPrimaryKeySelective(after);
-//        sysLogService.saveAclLog(before, after);
+        sysLogService.saveAclLog(before, after);
     }
 
     //校验相同名称
@@ -73,7 +74,8 @@ public class SysAclService {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
         return dateFormat.format(new Date()) + "_" + (int) (Math.random() * 100);
     }
-//权限方法----与数据库相关联  分页信息
+
+    //权限方法----与数据库相关联  分页信息
     public PageResult<SysAcl> getPageByAclModuleId(int aclModuleId, PageQuery page) {
 //        对分页信息进行校验
         BeanValidator.check(page);
