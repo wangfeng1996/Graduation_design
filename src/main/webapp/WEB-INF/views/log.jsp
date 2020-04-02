@@ -40,7 +40,7 @@
                                         <option value="1">部门</option>
                                         <option value="2">用户</option>
                                         <option value="3">权限模块</option>
-                                        <option value="4">权限</option>
+                                        <option value="4">权限点</option>
                                         <option value="5">角色</option>
                                         <option value="6">角色权限关系</option>
                                         <option value="7">角色用户关系</option>

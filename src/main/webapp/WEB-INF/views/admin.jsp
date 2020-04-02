@@ -1,4 +1,4 @@
-<%--<%@ page import="com.mmall.common.RequestHolder" %>--%>
+<%@ page import="com.mmall.common.RequestHolder" %>
 <%@ page import="com.mmall.model.SysUser" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -6,7 +6,16 @@
 <head>
     <jsp:include page="/common/backend_common.jsp"/>
 </head>
-
+<%-- zzl显示导航栏--%>
+<script type="text/javascript">
+    function navAId() {
+        if ($("#navLiId").attr("class") == "light-blue dropdown") {
+            $("#navLiId").attr("class", "light-blue dropdown open");
+        } else {
+            $("#navLiId").attr("class", "light-blue dropdown");
+        }
+    }
+</script>
 <body class="no-skin">
 <div id="navbar" class="navbar navbar-default">
     <div class="navbar-container">
@@ -18,17 +27,17 @@
         </button>
 
         <div class="navbar-header pull-left">
-            <a href="/admin/page.do" class="navbar-brand">
+            <a href="/admin/index.page" class="navbar-brand">
                 <small>
                     <i class="fa fa-leaf"></i>
-                    管理员控制台
+                    权限管理控制中心
                 </small>
             </a>
         </div>
         <div class="navbar-buttons navbar-header pull-right" role="navigation">
             <ul class="nav ace-nav">
-                <li class="light-blue dropdown-modal">
-                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                <li id="navLiId" class="light-blue dropdown">
+                    <a id="navAId" onclick="navAId()" data-toggle="dropdown" href="#" class="dropdown-toggle">
                         <span class="user-info">
                             <small>欢迎,</small>
                             Admin
@@ -81,7 +90,11 @@
 
         <ul class="nav nav-list">
             <li class="active">
-                <a class="popstyle" href="/sys/user/page.do" target="_blank">
+                <%--                <a class="popstyle" href="/sys/user/page.json" target="_blank">--%>
+
+
+                <a class="popstyle" href="/src/main/webapp/photos/首页页面.jpg" target="_blank">
+
                     <i class="menu-icon fa fa-tachometer"></i>
                     <span class="menu-text"> 首页 </span>
                 </a>
@@ -131,7 +144,7 @@
             <li class="">
                 <a href="#" class="dropdown-toggle">
                     <i class="menu-icon fa fa-desktop"></i>
-                    <span class="menu-text"> 系统管理 </span>
+                    <span class="menu-text"> 用户登录日志 </span>
                     <b class="arrow fa fa-angle-down"></b>
                 </a>
 
@@ -141,7 +154,7 @@
                     <li class="">
                         <a class="popstyle" href="/config/config.page" target="_blank">
                             <i class="menu-icon fa fa-caret-right"></i>
-                            全局配置管理
+                            日志模块
                         </a>
                         <b class="arrow"></b>
                     </li>
@@ -233,16 +246,16 @@
         $(".popstyle").click(function () {
             var $this = $(this)
             $("iframe").attr(
-                    'src',
-                    $this.attr("data")
+                'src',
+                $this.attr("data")
             );
         });
 
         $(".direct").click(function () {
             var $this = $(this)
             $("iframe").attr(
-                    'src',
-                    $this.attr("data-value")
+                'src',
+                $this.attr("data-value")
             );
         });
     });

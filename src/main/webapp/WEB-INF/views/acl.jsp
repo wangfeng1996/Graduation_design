@@ -168,7 +168,21 @@
         </table>
     </form>
 </div>
+<%--zz--用户权限展示--%>
+<div id="dialog-acl-role" style="display: none;">
+    <table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid">
+        <thead>
+        <tr>
+<%--            <th>角色ID</th>--%>
+            <th>角色名称</th>
+        </tr>
+        </thead>
+        <tbody id="aclRoleBody">
 
+        </tbody>
+
+    </table>
+</div>
 <script id="aclModuleListTemplate" type="x-tmpl-mustache">
 <ol class="dd-list ">
     {{#aclModuleList}}
@@ -208,6 +222,13 @@
             <a class="green acl-edit" href="#" data-id="{{id}}">
                 <i class="ace-icon fa fa-pencil bigger-100"></i>
             </a>
+            &nbsp;
+                <%-- 删除按钮--%>
+                <a class="red acl-delete" href="#" data-id="{{id}}" data-name="{{name}}">
+                    <i class="ace-icon fa fa-trash-o bigger"></i>
+                </a>
+            &nbsp;
+            <%-- 分配角色--%>
             <a class="red acl-role" href="#" data-id="{{id}}">
                 <i class="ace-icon fa fa-flag bigger-100"></i>
             </a>
@@ -371,14 +392,14 @@
 
         function bindAclModuleClick() {
             $(".sub-aclModule").click(function (e) {
-               e.preventDefault();
-               e.stopPropagation();
-               $(this).parent().parent().parent().children().children(".aclModule-name").toggleClass("hidden");
-               if($(this).is(".fa-angle-double-down")) {
-                   $(this).removeClass("fa-angle-double-down").addClass("fa-angle-double-up");
-               } else{
-                   $(this).removeClass("fa-angle-double-up").addClass("fa-angle-double-down");
-               }
+                e.preventDefault();
+                e.stopPropagation();
+                $(this).parent().parent().parent().children().children(".aclModule-name").toggleClass("hidden");
+                if($(this).is(".fa-angle-double-down")) {
+                    $(this).removeClass("fa-angle-double-down").addClass("fa-angle-double-up");
+                } else{
+                    $(this).removeClass("fa-angle-double-up").addClass("fa-angle-double-down");
+                }
             });
 
             $(".aclModule-name").click(function(e) {
@@ -525,6 +546,7 @@
 
         function bindAclClick() {
             $(".acl-role").click(function (e) {
+                $("#aclRoleBody").children().remove();
                 e.preventDefault();
                 e.stopPropagation();
                 var aclId = $(this).attr("data-id");
@@ -534,14 +556,38 @@
                         aclId: aclId
                     },
                     success: function(result) {
+                        console.log(result);
+                        if (result.data.roles.length==0){
+                            // alert("该权限点没有被分配角色！");
+                            showMessage("该权限点没有被分配角色", result.msg, true);
+                            return;
+                        }
                         if (result.ret) {
-                            console.log(result)
+                            $("#dialog-acl-role").dialog({
+                                modal: true,
+                                title: "已分配的角色",
+                                open: function (event, ui) {
+                                    $(".ui-dialog-titlebar-close", $(this).parent()).hide();
+                                    for (var i = 0; i <result.data.roles.length ; i++) {
+                                        $("#aclRoleBody").append("<tr>\n" +
+                                            // "                    <td>"+result.data.roles[i].id+"</td>\n" +
+                                            "                    <td>"+result.data.roles[i].name+"</td>\n" +
+                                            "                </tr>");
+                                    }
+                                },
+                                buttons: {
+                                    "确定": function () {
+                                        $("#dialog-acl-role").dialog("close");
+                                    }
+                                }
+                            });
                         } else {
                             showMessage("获取权限点分配的用户和角色", result.msg, false);
                         }
                     }
                 })
             });
+
             //编辑按钮
             $(".acl-edit").click(function(e) {
                 e.preventDefault();
@@ -582,8 +628,33 @@
                         }
                     }
                 });
-            })
+            });
+            //删除
+            //++++++++++++++++++++++++++++++++++++++++++++++++++
+            $(".acl-delete").click(function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var aclId = $(this).attr("data-id");
+                var aclName = $(this).attr("data-name");
+                if (confirm("确定要删除权限点[" + aclName + "]吗?")) {
+                    $.ajax({
+                        url: "/sys/acl/delete.json",
+                        data: {
+                            id: aclId
+                        },
+                        success: function (result) {
+                            if (result.ret) {
+                                showMessage("删除权限点[" + aclName + "]", "操作成功", true);
+                                loadAclList(lastClickAclModuleId);
+                            } else {
+                                showMessage("删除权限点[" + aclName + "]", result.msg, false);
+                            }
+                        }
+                    });
+                }
+            });
         }
+
         //新增
         $(".acl-add").click(function() {
             $("#dialog-acl-form").dialog({

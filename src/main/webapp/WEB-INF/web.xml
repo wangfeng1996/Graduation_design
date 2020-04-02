@@ -143,7 +143,7 @@
 
     <!--项目启动首先访问的页面-->
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>signin.jsp</welcome-file>
     </welcome-file-list>
 
 

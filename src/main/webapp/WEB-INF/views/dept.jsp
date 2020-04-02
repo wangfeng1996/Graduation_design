@@ -160,6 +160,21 @@
         </table>
     </form>
 </div>
+<%--zz--用户权限展示--%>
+<div id="dialog-user-role" style="display: none;">
+    <table class="table table-striped table-bordered table-hover dataTable no-footer" role="grid">
+        <thead>
+        <tr>
+<%--            <th>角色ID</th>--%>
+            <th>角色名称</th>
+        </tr>
+        </thead>
+        <tbody id="userRoleBody">
+
+        </tbody>
+
+    </table>
+</div>
 
 <script id="deptListTemplate" type="x-tmpl-mustache">
 <ol class="dd-list">
@@ -204,7 +219,12 @@
             <a class="green user-edit" href="#" data-id="{{id}}">
                 <i class="ace-icon fa fa-pencil-square-o bigger-100"></i>
             </a>
-
+            &nbsp;
+                <%-- 删除按钮--%>
+                <a class="red user-delete" href="#" data-id="{{id}}" data-name="{{name}}">
+                    <i class="ace-icon fa fa-trash-o bigger"></i>
+                </a>
+            &nbsp;
             <a class="red user-acl" href="#" data-id="{{id}}">
                 <i class="ace-icon fa fa-flag bigger-100"></i>
             </a>
@@ -448,8 +468,10 @@
         });
 
         //绑定用户点击事件
+        //zzl--用户权限显示
         function bindUserClick() {
             $(".user-acl").click(function (e) {
+                $("#userRoleBody").children().remove();
                 e.preventDefault();
                 e.stopPropagation();
                 var userId = $(this).attr("data-id");
@@ -459,14 +481,38 @@
                         userId: userId
                     },
                     success: function (result) {
+                        console.log(result);
+                        if (result.data.roles.length==0){
+                            // alert("该用户没有被分配角色！");
+                            showMessage("该用户没有被分配角色！", result.msg, true);
+                            return;
+                        }
                         if (result.ret) {
-                            console.log(result)
+                            $("#dialog-user-role").dialog({
+                                modal: true,
+                                title: "已分配的角色",
+                                open: function (event, ui) {
+                                    $(".ui-dialog-titlebar-close", $(this).parent()).hide();
+                                    for (var i = 0; i <result.data.roles.length ; i++) {
+                                        $("#userRoleBody").append("<tr>\n" +
+                                            // "                    <td>"+result.data.roles[i].id+"</td>\n" +
+                                            "                    <td>"+result.data.roles[i].name+"</td>\n" +
+                                            "                </tr>");
+                                    }
+                                },
+                                buttons: {
+                                    "确定": function () {
+                                        $("#dialog-user-role").dialog("close");
+                                    }
+                                }
+                            });
                         } else {
                             showMessage("获取用户权限数据", result.msg, false);
                         }
                     }
                 })
             });
+
             //编辑用户的点击事件
             $(".user-edit").click(function (e) {
                 e.preventDefault();
@@ -509,6 +555,34 @@
                     }
                 });
             });
+            //+++++++++++++++++++++++++
+            //删除部门绑定事件
+            $(".user-delete").click(function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var userId = $(this).attr("data-id");
+                var userName = $(this).attr("data-name");
+                if (confirm("确定要删除该用户吗?")) {
+                    $.ajax({
+                        url: "/sys/user/delete.json",
+                        data: {
+                            id: userId
+                        },
+                        success: function (result) {
+                            if (result.ret) {
+                                showMessage("删除该用户", "操作成功", true);
+                                loadUserList(lastClickDeptId);
+                            } else {
+                                showMessage("删除该用户", result.msg, false);
+                            }
+                        }
+                    });
+                }
+            });
+
+
+            //+++++++++++++++++++++++++++++++++++
+
         }
 
         $(".dept-add").click(function () {

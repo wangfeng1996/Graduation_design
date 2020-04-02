@@ -18,7 +18,7 @@
                         <h1 class="grey lighter smaller">
                             <span class="blue bigger-125">
                                 <i class="ace-icon fa fa-random"></i>
-                                无权限访问
+                                你没有被分配权限，无权限进入该页面
                             </span>
                         </h1>
 
